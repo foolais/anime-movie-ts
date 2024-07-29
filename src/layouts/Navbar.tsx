@@ -7,7 +7,7 @@ const Navbar = () => {
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
 
   return (
-    <div className="mx-auto h-16 w-[95%] rounded-bl-3xl rounded-br-3xl bg-secondary md:w-4/5">
+    <div className="absolute left-0 right-0 top-0 z-50 mx-auto h-16 w-[95%] rounded-bl-3xl rounded-br-3xl bg-secondary shadow-xl md:w-4/5">
       <div
         className={`flex h-full items-center justify-between px-8 ${showSearchBar && "hidden"}`}
       >
