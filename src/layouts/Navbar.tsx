@@ -1,9 +1,43 @@
-import { Title } from "../components";
+import { ArrowLeft, Search, User } from "lucide-react";
+import { Button, Title } from "../components";
+import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+
   return (
-    <div className="mx-auto flex h-14 w-4/5 items-center rounded-bl-3xl rounded-br-3xl bg-secondary px-8">
-      <Title />
+    <div className="mx-auto h-16 w-[95%] rounded-bl-3xl rounded-br-3xl bg-secondary md:w-4/5">
+      <div
+        className={`flex h-full items-center justify-between px-8 ${showSearchBar && "hidden"}`}
+      >
+        <Title />
+        <div className="flex items-center gap-4 md:gap-6">
+          <SearchBar className="hidden md:flex" />
+          <Button
+            variant="iconFill"
+            className="p-2.5 md:hidden"
+            onClick={() => setShowSearchBar(true)}
+          >
+            <Search size={20} />
+          </Button>
+          <Button variant="iconFill" className="p-2.5">
+            <User size={20} />
+          </Button>
+        </div>
+      </div>
+      {showSearchBar && (
+        <div className="flex h-full w-[95%] flex-shrink-0 items-center justify-center gap-2">
+          <Button
+            variant="ghost"
+            className="p-2.5"
+            onClick={() => setShowSearchBar(false)}
+          >
+            <ArrowLeft size={25} />
+          </Button>
+          <SearchBar className="flex w-4/5" />
+        </div>
+      )}
     </div>
   );
 };
