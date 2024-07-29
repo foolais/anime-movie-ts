@@ -1,4 +1,4 @@
-import { ArrowLeft, Search, User } from "lucide-react";
+import { ArrowLeft, Bookmark, Search, User } from "lucide-react";
 import { Button, Title } from "../components";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
@@ -20,6 +20,9 @@ const Navbar = () => {
             onClick={() => setShowSearchBar(true)}
           >
             <Search size={20} />
+          </Button>
+          <Button variant="iconFill" className="p-2.5">
+            <Bookmark size={20} />
           </Button>
           <Button variant="iconFill" className="p-2.5">
             <User size={20} />

@@ -50,8 +50,6 @@ const Hero = () => {
     },
   });
 
-  console.log({ data });
-
   const settings = {
     fade: true,
     infinite: true,
