@@ -54,8 +54,8 @@ const Hero = () => {
     fade: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 2500,
+    autoplaySpeed: 3500,
+    speed: 4000,
     slidesToShow: 1,
     slidesToScroll: 1,
     cssEase: "linear",
@@ -76,39 +76,48 @@ const Hero = () => {
             key={movie.mal_id}
             className="relative h-full w-full overflow-x-hidden"
           >
-            <div className="relative flex aspect-square w-full justify-end">
+            <div className="relative flex aspect-square h-screen w-full justify-end">
+              {/* Backdrop Image */}
               <img
                 src={movie?.trailer?.maximum_image_url}
                 alt={movie?.title}
-                className="h-screen w-[80%] bg-no-repeat object-cover object-left-top"
+                className="h-[90vh] w-full bg-no-repeat object-cover object-center md:h-[80vh] lg:h-screen lg:w-[80%] lg:object-left"
               />
               {/* Gradient */}
               <div className="hero-gradient-overlay" />
               {/* Information Movie */}
-              <div className="absolute left-20 top-[18%] z-40">
-                <div className="flex gap-8">
+              <div className="absolute left-1/2 top-[65%] z-40 w-3/4 -translate-x-1/2 -translate-y-1/2 md:left-[25%] md:top-[60vh] lg:left-96 lg:top-[40vh] lg:translate-y-0">
+                <div className="flex flex-col items-center justify-center gap-8 lg:flex-row">
+                  {/* Poster Image */}
                   <img
                     src={movie?.images?.large_image_url}
                     alt={movie?.title}
-                    className="w-[320px] rounded-lg"
+                    className="w-[170px] rounded-lg md:w-[200px] lg:w-[230px]"
                   />
-                  <div className="flex max-w-[400px] flex-col justify-center gap-4 text-white">
-                    <h2 className="text-2xl font-bold tracking-wider">
+                  {/* Information Right side */}
+                  <div className="flex max-w-[500px] flex-col items-center justify-center gap-4 text-white md:max-w-[400px] lg:items-start">
+                    {/* Title */}
+                    <h2 className="max-w-[300px] text-center text-lg font-bold tracking-wider lg:text-left lg:text-2xl">
                       {movie?.title}
                     </h2>
-                    <div className="flex items-center gap-2">
+                    {/* Star */}
+                    <div className="hidden items-center gap-2 lg:flex">
                       <Star fill="yellow" size={25} />
                       <span className="text-xl font-semibold">
                         {movie?.score}
                       </span>
                     </div>
-                    <p>{truncateText(movie?.synopsis, 200)}</p>
-                    <p>Genres: {mappedGenres(movie?.genres)}</p>
+                    {/* Synopsis */}
+                    <p className="hidden lg:block lg:max-w-[300px]">
+                      {truncateText(movie?.synopsis, 150)}
+                    </p>
+                    {/* Genres */}
+                    <p className="hidden lg:block">
+                      Genres: {mappedGenres(movie?.genres)}
+                    </p>
+                    {/* CTA Button */}
                     <div className="flex items-center gap-6">
-                      <Button
-                        className="flex items-center gap-2 px-6 py-2 text-xl"
-                        variant="outline"
-                      >
+                      <Button className="flex flex-shrink-0 items-center gap-2 px-6 py-2 lg:text-xl">
                         <Play size={25} strokeWidth={2} />
                         <p>See Details</p>
                       </Button>
