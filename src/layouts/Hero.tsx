@@ -5,37 +5,12 @@ import { Button } from "../components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SliderContainer from "../components/Slider/SliderContainer";
-
-interface Genres {
-  mal_id: number;
-  name: string;
-}
-
-interface Images {
-  image_url: string;
-  large_image_url: string;
-  small_image_url: string;
-}
-
-interface Trailer extends Images {
-  medium_image_url: string;
-  maximum_image_url: string;
-}
-
-interface Movies {
-  mal_id: number;
-  title: string;
-  genres: Genres;
-  score: number;
-  synopsis: string;
-  images: { jpg: Images };
-  trailer: { images: Trailer };
-}
+import { BackdropMovies } from "../types/types";
 
 const Hero = () => {
   const { data, isLoading } = useQueries({
     prefixUrl: "/seasons/now?limit=8",
-    transformData: (data: Movies[]) => {
+    transformData: (data: BackdropMovies[]) => {
       const transformedData = data.map((movie) => ({
         mal_id: movie.mal_id,
         title: movie.title,
@@ -54,8 +29,8 @@ const Hero = () => {
     fade: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 3500,
-    speed: 4000,
+    autoplaySpeed: 3000,
+    speed: 3500,
     slidesToShow: 1,
     slidesToScroll: 1,
     cssEase: "linear",
@@ -86,13 +61,13 @@ const Hero = () => {
               {/* Gradient */}
               <div className="hero-gradient-overlay" />
               {/* Information Movie */}
-              <div className="absolute left-1/2 top-[65%] z-40 w-3/4 -translate-x-1/2 -translate-y-1/2 md:left-[25%] md:top-[60vh] lg:left-96 lg:top-[40vh] lg:translate-y-0">
+              <div className="absolute left-1/2 top-[65%] z-40 w-3/4 -translate-x-1/2 -translate-y-1/2 md:left-[25%] md:top-[60vh] lg:left-96 lg:top-[50vh] lg:translate-y-0">
                 <div className="flex flex-col items-center justify-center gap-8 lg:flex-row">
                   {/* Poster Image */}
                   <img
                     src={movie?.images?.large_image_url}
                     alt={movie?.title}
-                    className="w-[170px] rounded-lg md:w-[200px] lg:w-[230px]"
+                    className="w-[170px] rounded-lg md:w-[200px] lg:w-[230px] xl:w-[250px]"
                   />
                   {/* Information Right side */}
                   <div className="flex max-w-[500px] flex-col items-center justify-center gap-4 text-white md:max-w-[400px] lg:items-start">
