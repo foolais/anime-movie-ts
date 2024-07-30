@@ -4,9 +4,9 @@ const Title = () => {
   return (
     <div className="flex items-center gap-1 text-primary">
       <Film strokeWidth={2} />
-      <span className="text-lg font-bold md:text-xl md:tracking-widest">
+      <h1 className="text-lg font-bold md:text-xl md:tracking-widest">
         FXMovies
-      </span>
+      </h1>
     </div>
   );
 };

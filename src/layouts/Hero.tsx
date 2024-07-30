@@ -1,10 +1,9 @@
 import { Bookmark, Play, Star } from "lucide-react";
 import useQueries from "../hooks/useQueries";
 import { mappedGenres, truncateText } from "../utils/utils";
-import { Button } from "../components";
+import { Button, SliderContainer } from "../components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import SliderContainer from "../components/Slider/SliderContainer";
 import { BackdropMovies } from "../types/types";
 
 const Hero = () => {
@@ -36,6 +35,7 @@ const Hero = () => {
     cssEase: "linear",
     adaptiveHeight: true,
   };
+
   if (isLoading)
     return (
       <div className="mt-10 flex h-screen w-full text-4xl">

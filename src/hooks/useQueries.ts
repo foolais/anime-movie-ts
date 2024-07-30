@@ -41,7 +41,7 @@ const useQueries = <TData>({
         data: transformedData,
         isError: false,
       }));
-    } catch (error) {
+    } catch (error: any) {
       console.log({ error });
       onError?.(error);
       setState((prev) => ({

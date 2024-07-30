@@ -26,3 +26,8 @@ export interface Movies {
 export interface BackdropMovies extends Movies {
   trailer: { images: Trailer };
 }
+
+export interface PosterAnimes extends Movies {
+  episodes?: number | null;
+  year: number;
+}
