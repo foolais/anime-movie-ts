@@ -25,6 +25,8 @@ const ListContainer = ({ title }: Props) => {
         return `/top/anime?page=${currentPage}`;
       case "upcoming":
         return `/seasons/upcoming?page=${currentPage}`;
+      case "search":
+        return `/anime?q=${searchParams.get("q")}&page=${currentPage}`;
       default:
         throw new Error("Invalid title prop for ListContainer");
     }
@@ -55,6 +57,9 @@ const ListContainer = ({ title }: Props) => {
       case "upcoming":
         navigate(`/anime/upcoming?page=${page}`);
         break;
+      case "search":
+        navigate(`/anime/search?q=${searchParams.get("q")}&page=${page}`);
+        break;
       default:
         throw new Error("Invalid title prop for ListContainer");
     }
@@ -72,7 +77,7 @@ const ListContainer = ({ title }: Props) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
         {movies.map((movie) => (
           <Poster data={movie} key={movie.mal_id} />
         ))}

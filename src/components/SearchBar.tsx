@@ -1,13 +1,16 @@
 import { Search } from "lucide-react";
 import Button from "./Button";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ className }: { className?: string }) => {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState<string>("");
 
   const handleSearch = (event: FormEvent) => {
     event.preventDefault();
-    console.log({ search });
+    navigate(`/anime/search?q=${search}&page=1`);
   };
 
   return (

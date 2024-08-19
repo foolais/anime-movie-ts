@@ -17,9 +17,9 @@ const Poster = ({ data }: PosterProps) => {
           <img
             src={images?.jpg?.large_image_url}
             alt={title}
-            className="h-[300px] min-w-[200px] object-cover"
+            className="h-[300px] min-w-[150px] object-cover"
           />
-          <p className="w-[180px] text-center text-white">{title}</p>
+          <p className="w-[150px] text-center text-white">{title}</p>
         </div>
         <div className="absolute bottom-0 top-0 hidden w-[200px] bg-secondary bg-opacity-95 group-hover:flex">
           <div className="relative flex h-full w-full flex-col justify-start gap-4 text-wrap p-8 font-bold text-white">

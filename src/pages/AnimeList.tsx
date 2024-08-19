@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import { Footer, Navbar } from "../layouts";
 import ListContainer from "../layouts/ListContainer";
 
@@ -7,6 +8,17 @@ interface Props {
 
 const AnimeList = (props: Props) => {
   const { title } = props;
+  const [searchParams] = useSearchParams();
+
+  const setTitle = () => {
+    if (title === "search") {
+      const search = searchParams.get("q");
+      if (!search) return "Search Anime";
+      return `Search Anime "${search}"`;
+    } else {
+      return title;
+    }
+  };
 
   return (
     <div className="h-full min-h-screen w-full bg-black p-4">
@@ -14,7 +26,7 @@ const AnimeList = (props: Props) => {
       {title && (
         <div className="mx-auto w-[95vw]">
           <h1 className="mb-4 mt-20 text-3xl font-bold capitalize tracking-wider text-white">
-            {title} Anime
+            {setTitle()}
           </h1>
           <ListContainer title={title} />
         </div>
