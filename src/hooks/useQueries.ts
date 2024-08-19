@@ -13,6 +13,7 @@ interface useQueriesState<TData> {
   isLoading: boolean;
   isError: boolean;
   error?: any;
+  pagination?: any;
 }
 
 const useQueries = <TData>({
@@ -23,6 +24,7 @@ const useQueries = <TData>({
 }: useQueriesOptions<TData>) => {
   const [state, setState] = useState<useQueriesState<TData>>({
     data: initialData || null,
+    pagination: null,
     isLoading: true,
     isError: false,
     error: null,
@@ -32,11 +34,24 @@ const useQueries = <TData>({
     setState((prev) => ({ ...prev, isLoading: true, isError: false }));
 
     try {
+      if (!url) {
+        throw new Error("URL cannot be empty or undefined");
+      } else if (url.includes("undefined")) {
+        throw new Error("URL includes undefined");
+      }
+
       const BASE_URL = import.meta.env.VITE_BASE_URL;
-      const { data } = await axios.get(BASE_URL + url);
+      const response = await axios.get(BASE_URL + url);
+
+      if (response.status !== 200) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const { data } = response;
       const transformedData = transformData?.(data.data) || data.data;
       setState((prev) => ({
         ...prev,
+        pagination: data?.pagination,
         isLoading: false,
         data: transformedData,
         isError: false,

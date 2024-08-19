@@ -68,7 +68,7 @@ const PosterSlider = (props: Props) => {
 
   const handleNavigateList = () => {
     const path = title?.toLocaleLowerCase()?.split(" ");
-    if (path) navigate(`/anime/${path[0]}`);
+    if (path) navigate(`/anime/${path[0]}?page=1`);
   };
 
   if (isLoading)

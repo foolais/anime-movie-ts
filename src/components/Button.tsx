@@ -27,7 +27,10 @@ const Button = (props: ButtonProps) => {
   }[variant];
 
   return (
-    <button {...rest} className={`${className} ${variantClass} font-semibold`}>
+    <button
+      {...rest}
+      className={`${className} ${variantClass} font-semibold disabled:opacity-50`}
+    >
       {children}
     </button>
   );
