@@ -1,8 +1,8 @@
-import { Bookmark, ChevronRight, Info } from "lucide-react";
-import { Button, SliderContainer } from "../components";
+import { ChevronRight } from "lucide-react";
+import { Button, Poster, SliderContainer } from "../components";
 import useQueries from "../hooks/useQueries";
 import { PosterAnimes } from "../types/types";
-import { truncateText } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title?: string;
@@ -11,6 +11,8 @@ interface Props {
 
 const PosterSlider = (props: Props) => {
   const { title, url } = props;
+
+  const navigate = useNavigate();
 
   const { data, isLoading } = useQueries({
     prefixUrl: url,
@@ -21,7 +23,7 @@ const PosterSlider = (props: Props) => {
         genres: movie.genres,
         score: movie.score,
         synopsis: movie.synopsis,
-        images: movie.images?.jpg,
+        images: movie.images,
         episodes: movie?.episodes,
         year: movie?.year,
       }));
@@ -31,7 +33,7 @@ const PosterSlider = (props: Props) => {
   });
 
   const settings = {
-    infinite: false,
+    infinite: true,
     autoPlay: true,
     speedAutoPlay: 1000,
     speed: 1500,
@@ -39,6 +41,34 @@ const PosterSlider = (props: Props) => {
     slidesToScroll: 4,
     initialSlide: 0,
     variableWidth: true,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const handleNavigateList = () => {
+    const path = title?.toLocaleLowerCase()?.split(" ");
+    if (path) navigate(`/anime/${path[0]}`);
   };
 
   if (isLoading)
@@ -57,6 +87,7 @@ const PosterSlider = (props: Props) => {
         <Button
           variant="ghost"
           className="flex items-center gap-1 text-white hover:text-primary"
+          onClick={handleNavigateList}
         >
           <span className="text-lg font-semibold">See More</span>
           <ChevronRight size={25} />
@@ -64,48 +95,7 @@ const PosterSlider = (props: Props) => {
       </div>
       <SliderContainer {...settings} className="custom-slick">
         {data &&
-          data.map((movie) => (
-            <div
-              key={movie?.mal_id}
-              className="cursor-pointer transition-all duration-300 ease-in-out"
-            >
-              <div className="group relative">
-                <div>
-                  <img
-                    src={movie?.images?.large_image_url}
-                    alt={movie?.title}
-                    className="h-[300px] w-[200px] object-cover"
-                  />
-                  <p className="max-w-[180px] text-center text-white">
-                    {movie?.title}
-                  </p>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 top-0 hidden bg-secondary bg-opacity-95 group-hover:flex">
-                  <div className="relative flex h-full w-full flex-col justify-start gap-4 text-wrap p-8 font-bold text-white">
-                    <p className="text-md">{movie?.title}</p>
-                    {movie?.episodes && (
-                      <p className="text-sm font-extrabold text-gray-500">
-                        {movie?.episodes} Episodes
-                      </p>
-                    )}
-                    {movie?.synopsis && (
-                      <p className="text-sm">
-                        {truncateText(movie?.synopsis, 80)}
-                      </p>
-                    )}
-                    <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform items-center gap-2">
-                      <Button variant="ghost" className="p-2">
-                        <Info size={30} />
-                      </Button>
-                      <Button variant="ghost" className="p-2">
-                        <Bookmark size={30} />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+          data.map((movie) => <Poster data={movie} key={movie?.mal_id} />)}
       </SliderContainer>
     </div>
   );

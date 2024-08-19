@@ -16,7 +16,7 @@ const Hero = () => {
         genres: movie.genres,
         score: movie.score,
         synopsis: movie.synopsis,
-        images: movie.images?.jpg,
+        images: movie.images,
         trailer: movie.trailer?.images,
       }));
 
@@ -38,7 +38,7 @@ const Hero = () => {
 
   if (isLoading)
     return (
-      <div className="mt-10 flex h-screen w-full text-4xl">
+      <div className="flex h-screen w-full items-center justify-center text-4xl">
         <p className="mx-auto text-white">Loading...</p>
       </div>
     );
@@ -65,7 +65,7 @@ const Hero = () => {
                 <div className="flex flex-col items-center justify-center gap-8 lg:flex-row">
                   {/* Poster Image */}
                   <img
-                    src={movie?.images?.large_image_url}
+                    src={movie?.images?.jpg?.large_image_url}
                     alt={movie?.title}
                     className="w-[170px] rounded-lg md:w-[200px] lg:w-[230px] xl:w-[250px]"
                   />

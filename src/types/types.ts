@@ -20,6 +20,7 @@ export interface Movies {
   genres: Genres;
   score: number;
   synopsis: string;
+  episodes?: number | null;
   images: { jpg: Images };
 }
 
