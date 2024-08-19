@@ -1,4 +1,4 @@
-import { Bookmark, Play, Star } from "lucide-react";
+import { Bookmark, Info, Star } from "lucide-react";
 import useQueries from "../hooks/useQueries";
 import { mappedGenres, truncateText } from "../utils/utils";
 import { Button, SliderContainer } from "../components";
@@ -91,9 +91,9 @@ const Hero = () => {
                       Genres: {mappedGenres(movie?.genres)}
                     </p>
                     {/* CTA Button */}
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4">
                       <Button className="flex flex-shrink-0 items-center gap-2 px-6 py-2 lg:text-xl">
-                        <Play size={25} strokeWidth={2} />
+                        <Info size={25} strokeWidth={2} />
                         <p>See Details</p>
                       </Button>
                       <Button variant="outline" className="px-2 py-2">

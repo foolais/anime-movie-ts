@@ -1,4 +1,4 @@
-import { Bookmark, Info, Play } from "lucide-react";
+import { Bookmark, ChevronRight, Info } from "lucide-react";
 import { Button, SliderContainer } from "../components";
 import useQueries from "../hooks/useQueries";
 import { PosterAnimes } from "../types/types";
@@ -49,10 +49,19 @@ const PosterSlider = (props: Props) => {
     );
 
   return (
-    <div className="bg-black p-8">
-      <h3 className="mb-4 text-2xl font-semibold tracking-wider text-white">
-        {title}
-      </h3>
+    <div className="bg-black px-8 py-4">
+      <div className="flex w-full justify-between">
+        <h3 className="mb-4 text-2xl font-semibold tracking-wider text-white">
+          {title}
+        </h3>
+        <Button
+          variant="ghost"
+          className="flex items-center gap-1 text-white hover:text-primary"
+        >
+          <span className="text-lg font-semibold">See More</span>
+          <ChevronRight size={25} />
+        </Button>
+      </div>
       <SliderContainer {...settings} className="custom-slick">
         {data &&
           data.map((movie) => (
@@ -86,13 +95,10 @@ const PosterSlider = (props: Props) => {
                     )}
                     <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform items-center gap-2">
                       <Button variant="ghost" className="p-2">
-                        <Play />
+                        <Info size={30} />
                       </Button>
                       <Button variant="ghost" className="p-2">
                         <Bookmark size={30} />
-                      </Button>
-                      <Button variant="ghost" className="p-2">
-                        <Info size={30} />
                       </Button>
                     </div>
                   </div>
