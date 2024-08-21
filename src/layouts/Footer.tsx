@@ -1,5 +1,6 @@
 import { Github, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Button, Title } from "../components";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -8,15 +9,33 @@ const Footer = () => {
         <Title />
       </div>
       <div className="flex items-center justify-center gap-16 p-4 text-white">
-        <Button variant="ghost">
-          <Github size={30} />
-        </Button>
-        <Button variant="ghost">
-          <Instagram size={30} />
-        </Button>
-        <Button variant="ghost">
-          <Linkedin size={30} />
-        </Button>
+        <Link
+          to="https://github.com/foolais"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="ghost">
+            <Github size={30} />
+          </Button>
+        </Link>
+        <Link
+          to="https://www.instagram.com/wahyu_esya/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="ghost">
+            <Instagram size={30} />
+          </Button>
+        </Link>
+        <Link
+          to="https://www.linkedin.com/in/wahyu-esya-nasution-56ba01226/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button variant="ghost">
+            <Linkedin size={30} />
+          </Button>
+        </Link>
       </div>
       <p className="mt-8 text-center text-sm text-primary">
         © 2024 Foolaisx FXMovies
