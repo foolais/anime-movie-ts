@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { HomePage } from "./pages";
+import { AnimeDetails, HomePage } from "./pages";
 import { AnimeListWrapper } from "./layouts";
 
 const router = createBrowserRouter([
@@ -10,6 +10,10 @@ const router = createBrowserRouter([
   {
     path: "/anime/:listAnime",
     element: <AnimeListWrapper />,
+  },
+  {
+    path: "/details/:mal_id",
+    element: <AnimeDetails />,
   },
 ]);
 

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import AnimeList from "../pages/AnimeList";
 import { AnimeListParams } from "../types/types";
+import { AnimeList } from "../pages";
 
 const AnimeListWrapper = () => {
   const { listAnime } = useParams<{ listAnime: string }>();

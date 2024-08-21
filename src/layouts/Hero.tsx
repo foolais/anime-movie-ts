@@ -6,8 +6,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BackdropMovies, Movies } from "../types/types";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [bookmarkedMovies, setBookmarkedMovies] = useState<number[]>([]);
 
   const { data, isLoading } = useQueries({
@@ -127,7 +129,10 @@ const Hero = () => {
                     </p>
                     {/* CTA Button */}
                     <div className="flex items-center gap-4">
-                      <Button className="flex flex-shrink-0 items-center gap-2 px-6 py-2 lg:text-xl">
+                      <Button
+                        className="flex flex-shrink-0 items-center gap-2 px-6 py-2 lg:text-xl"
+                        onClick={() => navigate(`/details/${movie.mal_id}`)}
+                      >
                         <Info size={25} strokeWidth={2} />
                         <p>See Details</p>
                       </Button>

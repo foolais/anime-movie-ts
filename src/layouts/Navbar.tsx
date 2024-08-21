@@ -30,9 +30,6 @@ const Navbar = () => {
           >
             <Bookmark size={20} />
           </Button>
-          <Button variant="iconFill" className="p-2.5">
-            <User size={20} />
-          </Button>
         </div>
       </div>
       {showSearchBar && (

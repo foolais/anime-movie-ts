@@ -3,6 +3,7 @@ import Button from "./Button";
 import { Bookmark, Info } from "lucide-react";
 import { Movies } from "../types/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface PosterProps {
   data: Movies;
@@ -10,6 +11,8 @@ interface PosterProps {
 
 const Poster = ({ data }: PosterProps) => {
   const { mal_id, title, episodes, synopsis, images } = data;
+  const navigate = useNavigate();
+
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
   const handleClickBookmark = useCallback(() => {
@@ -30,7 +33,7 @@ const Poster = ({ data }: PosterProps) => {
   );
 
   return (
-    <div className="w-[200px] cursor-pointer transition-all duration-300 ease-in-out">
+    <div className="w-[180px] cursor-pointer transition-all duration-300 ease-in-out md:w-[200px]">
       <div className="group relative">
         <div>
           <img
@@ -40,7 +43,7 @@ const Poster = ({ data }: PosterProps) => {
           />
           <p className="w-[150px] text-center text-white">{title}</p>
         </div>
-        <div className="absolute bottom-0 top-0 hidden w-[200px] bg-secondary bg-opacity-95 group-hover:flex">
+        <div className="absolute bottom-0 top-0 hidden w-[180px] bg-secondary bg-opacity-95 group-hover:flex md:w-[200px]">
           <div className="relative flex h-full w-full flex-col justify-start gap-4 text-wrap p-8 font-bold text-white">
             <p className="text-md">{title}</p>
             {episodes && (
@@ -50,7 +53,11 @@ const Poster = ({ data }: PosterProps) => {
             )}
             {synopsis && <p className="text-sm">{synopsisText}</p>}
             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform items-center gap-2">
-              <Button variant="ghost" className="p-2">
+              <Button
+                variant="ghost"
+                className="p-2"
+                onClick={() => navigate(`/details/${mal_id}`)}
+              >
                 <Info size={30} />
               </Button>
               <Button

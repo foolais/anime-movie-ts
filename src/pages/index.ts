@@ -1,3 +1,5 @@
 import HomePage from "./HomePage";
+import AnimeList from "./AnimeList";
+import AnimeDetails from "./AnimeDetails";
 
-export { HomePage };
+export { HomePage, AnimeList, AnimeDetails };
