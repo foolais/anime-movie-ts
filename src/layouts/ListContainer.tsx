@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useQueries from "../hooks/useQueries";
 import { AnimeListParams, Movies, PosterAnimes } from "../types/types";
-import { Pagination, Poster } from "../components";
+import { Pagination, Poster, PosterSkeleton } from "../components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface Props {
@@ -74,14 +74,6 @@ const ListContainer = ({ title }: Props) => {
     return data || [];
   };
 
-  if (isLoading && title !== "bookmark") {
-    return (
-      <div className="mt-10 flex h-screen w-full bg-black p-8 text-4xl">
-        <p className="mx-auto text-white">Loading...</p>
-      </div>
-    );
-  }
-
   if (title === "bookmark" && getMoviesData().length === 0) {
     return (
       <div className="mt-10 flex h-[60vh] w-full bg-black p-4">
@@ -95,9 +87,17 @@ const ListContainer = ({ title }: Props) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-        {getMoviesData().map((movie: Movies) => (
-          <Poster data={movie} key={movie.mal_id} />
-        ))}
+        {!isLoading && title !== "bookmark"
+          ? getMoviesData().map((movie: Movies) => (
+              <Poster data={movie} key={movie.mal_id} />
+            ))
+          : title === "bookmark"
+            ? getMoviesData().map((movie: Movies) => (
+                <Poster data={movie} key={movie.mal_id} />
+              ))
+            : Array.from({ length: 20 }).map((_, index) => (
+                <PosterSkeleton key={index} />
+              ))}
       </div>
       {pagination?.last_visible_page && title !== "bookmark" && (
         <div className="flex w-full justify-center p-4">

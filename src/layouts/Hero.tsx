@@ -1,7 +1,7 @@
 import { Bookmark, Info, Star } from "lucide-react";
 import useQueries from "../hooks/useQueries";
 import { addBookmarkAnime, mappedGenres, truncateText } from "../utils/utils";
-import { Button, SliderContainer } from "../components";
+import { Button, HeroSkeleton, SliderContainer } from "../components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BackdropMovies, Movies } from "../types/types";
@@ -73,16 +73,9 @@ const Hero = () => {
     setBookmarkedMovies(moviesId);
   }, []);
 
-  if (isLoading)
-    return (
-      <div className="flex h-screen w-full items-center justify-center text-4xl">
-        <p className="mx-auto text-white">Loading...</p>
-      </div>
-    );
-
   return (
     <SliderContainer {...settings} className="max-h-screen overflow-hidden">
-      {!isLoading &&
+      {!isLoading ? (
         data?.map((movie) => (
           <div
             key={movie.mal_id}
@@ -157,7 +150,10 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <HeroSkeleton />
+      )}
     </SliderContainer>
   );
 };

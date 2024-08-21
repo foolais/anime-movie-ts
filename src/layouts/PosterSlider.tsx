@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { Button, Poster, SliderContainer } from "../components";
+import { Button, Poster, PosterSkeleton, SliderContainer } from "../components";
 import useQueries from "../hooks/useQueries";
 import { PosterAnimes } from "../types/types";
 import { useNavigate } from "react-router-dom";
@@ -71,13 +71,6 @@ const PosterSlider = (props: Props) => {
     if (path) navigate(`/anime/${path[0]}?page=1`);
   };
 
-  if (isLoading)
-    return (
-      <div className="mt-10 flex h-[30vh] w-full bg-black p-8 text-4xl">
-        <p className="mx-auto text-white">Loading...</p>
-      </div>
-    );
-
   return (
     <div className="bg-black px-8 py-4">
       <div className="flex w-full justify-between">
@@ -94,8 +87,11 @@ const PosterSlider = (props: Props) => {
         </Button>
       </div>
       <SliderContainer {...settings} className="custom-slick">
-        {data &&
-          data.map((movie) => <Poster data={movie} key={movie?.mal_id} />)}
+        {data && !isLoading
+          ? data.map((movie) => <Poster data={movie} key={movie?.mal_id} />)
+          : Array.from({ length: 10 }).map((_, index) => (
+              <PosterSkeleton key={index} />
+            ))}
       </SliderContainer>
     </div>
   );
