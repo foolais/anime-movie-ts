@@ -1,4 +1,4 @@
-import { ArrowLeft, Bookmark, Search, User } from "lucide-react";
+import { ArrowLeft, Bookmark, Search } from "lucide-react";
 import { Button, Title } from "../components";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
