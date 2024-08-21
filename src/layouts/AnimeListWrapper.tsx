@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import AnimeList from "../pages/AnimeList";
-
-type AnimeListParams = "top" | "upcoming" | "search";
+import { AnimeListParams } from "../types/types";
 
 const AnimeListWrapper = () => {
   const { listAnime } = useParams<{ listAnime: string }>();
@@ -10,6 +9,7 @@ const AnimeListWrapper = () => {
     top: "top",
     upcoming: "upcoming",
     search: "search",
+    bookmark: "bookmark",
   };
 
   const title = titles[listAnime as AnimeListParams];

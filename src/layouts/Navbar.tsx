@@ -2,8 +2,10 @@ import { ArrowLeft, Bookmark, Search, User } from "lucide-react";
 import { Button, Title } from "../components";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
 
   return (
@@ -21,7 +23,11 @@ const Navbar = () => {
           >
             <Search size={20} />
           </Button>
-          <Button variant="iconFill" className="p-2.5">
+          <Button
+            variant="iconFill"
+            className="p-2.5"
+            onClick={() => navigate("/anime/bookmark")}
+          >
             <Bookmark size={20} />
           </Button>
           <Button variant="iconFill" className="p-2.5">

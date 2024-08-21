@@ -1,12 +1,15 @@
 import { Bookmark, Info, Star } from "lucide-react";
 import useQueries from "../hooks/useQueries";
-import { mappedGenres, truncateText } from "../utils/utils";
+import { addBookmarkAnime, mappedGenres, truncateText } from "../utils/utils";
 import { Button, SliderContainer } from "../components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BackdropMovies } from "../types/types";
+import { BackdropMovies, Movies } from "../types/types";
+import { useCallback, useEffect, useState } from "react";
 
 const Hero = () => {
+  const [bookmarkedMovies, setBookmarkedMovies] = useState<number[]>([]);
+
   const { data, isLoading } = useQueries({
     prefixUrl: "/seasons/now?limit=8",
     transformData: (data: BackdropMovies[]) => {
@@ -35,6 +38,38 @@ const Hero = () => {
     cssEase: "linear",
     adaptiveHeight: true,
   };
+
+  const handleClickBookmark = useCallback(
+    (movie: Movies) => {
+      const isBookmarked = bookmarkedMovies.includes(movie.mal_id);
+      const updatedBookmarks = isBookmarked
+        ? bookmarkedMovies.filter((id) => id !== movie.mal_id)
+        : [...bookmarkedMovies, movie.mal_id];
+
+      setBookmarkedMovies(updatedBookmarks);
+
+      const payload = {
+        mal_id: movie.mal_id,
+        title: movie.title,
+        genres: movie.genres,
+        score: movie.score,
+        synopsis: movie.synopsis,
+        images: { jpg: movie.images.jpg },
+      };
+
+      addBookmarkAnime(payload, isBookmarked ? "remove" : "add");
+    },
+    [bookmarkedMovies],
+  );
+
+  useEffect(() => {
+    const savedBookmarks = JSON.parse(
+      localStorage.getItem("bookmarkMovie") || "[]",
+    );
+    const moviesId =
+      savedBookmarks && savedBookmarks.map((movie: any) => movie.mal_id);
+    setBookmarkedMovies(moviesId);
+  }, []);
 
   if (isLoading)
     return (
@@ -96,8 +131,20 @@ const Hero = () => {
                         <Info size={25} strokeWidth={2} />
                         <p>See Details</p>
                       </Button>
-                      <Button variant="outline" className="px-2 py-2">
-                        <Bookmark size={25} strokeWidth={2} />
+                      <Button
+                        variant="outline"
+                        className="px-2 py-2"
+                        onClick={() => handleClickBookmark(movie)}
+                      >
+                        <Bookmark
+                          size={25}
+                          strokeWidth={2}
+                          fill={
+                            bookmarkedMovies.includes(movie.mal_id)
+                              ? "#7ECA9C"
+                              : "none"
+                          }
+                        />
                       </Button>
                     </div>
                   </div>

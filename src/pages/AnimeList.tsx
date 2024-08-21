@@ -1,9 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 import { Footer, Navbar } from "../layouts";
 import ListContainer from "../layouts/ListContainer";
+import { useEffect } from "react";
+import { AnimeListParams } from "../types/types";
 
 interface Props {
-  title: "top" | "upcoming" | "search";
+  title: AnimeListParams;
 }
 
 const AnimeList = (props: Props) => {
@@ -16,9 +18,13 @@ const AnimeList = (props: Props) => {
       if (!search) return "Search Anime";
       return `Search Anime "${search}"`;
     } else {
-      return title;
+      return `${title} Anime`;
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="h-full min-h-screen w-full bg-black p-4">

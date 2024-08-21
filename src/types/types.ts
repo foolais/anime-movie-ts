@@ -30,5 +30,7 @@ export interface BackdropMovies extends Movies {
 
 export interface PosterAnimes extends Movies {
   episodes?: number | null;
-  year: number;
+  year?: number;
 }
+
+export type AnimeListParams = "top" | "upcoming" | "search" | "bookmark";

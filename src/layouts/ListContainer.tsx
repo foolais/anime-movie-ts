@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useQueries from "../hooks/useQueries";
-import { PosterAnimes } from "../types/types";
-import { Poster } from "../components";
+import { AnimeListParams, Movies, PosterAnimes } from "../types/types";
+import { Pagination, Poster } from "../components";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Pagination from "../components/Pagination";
 
 interface Props {
-  title: "top" | "upcoming" | "search";
+  title: AnimeListParams;
 }
 
 const ListContainer = ({ title }: Props) => {
@@ -19,7 +18,7 @@ const ListContainer = ({ title }: Props) => {
     setCurrentPage(+page);
   }, [searchParams]);
 
-  const getUrlPath = (): string => {
+  const getUrlPath = useCallback((): string => {
     switch (title) {
       case "top":
         return `/top/anime?page=${currentPage}`;
@@ -27,10 +26,12 @@ const ListContainer = ({ title }: Props) => {
         return `/seasons/upcoming?page=${currentPage}`;
       case "search":
         return `/anime?q=${searchParams.get("q")}&page=${currentPage}`;
+      case "bookmark":
+        return "";
       default:
-        throw new Error("Invalid title prop for ListContainer");
+        throw new Error("404 Page Not Found");
     }
-  };
+  }, [title, currentPage, searchParams]);
 
   const { data, isLoading, pagination } = useQueries({
     prefixUrl: getUrlPath(),
@@ -65,7 +66,15 @@ const ListContainer = ({ title }: Props) => {
     }
   };
 
-  if (isLoading) {
+  const getMoviesData = () => {
+    if (title === "bookmark") {
+      return JSON.parse(localStorage.getItem("bookmarkMovie") || "[]");
+    }
+
+    return data || [];
+  };
+
+  if (isLoading && title !== "bookmark") {
     return (
       <div className="mt-10 flex h-screen w-full bg-black p-8 text-4xl">
         <p className="mx-auto text-white">Loading...</p>
@@ -73,16 +82,24 @@ const ListContainer = ({ title }: Props) => {
     );
   }
 
-  const movies = data || [];
+  if (title === "bookmark" && getMoviesData().length === 0) {
+    return (
+      <div className="mt-10 flex h-[60vh] w-full bg-black p-4">
+        <p className="mx-auto text-2xl font-semibold text-white">
+          Empty Bookmarks Anime
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-        {movies.map((movie) => (
+        {getMoviesData().map((movie: Movies) => (
           <Poster data={movie} key={movie.mal_id} />
         ))}
       </div>
-      {pagination?.last_visible_page && (
+      {pagination?.last_visible_page && title !== "bookmark" && (
         <div className="flex w-full justify-center p-4">
           <Pagination
             currentPage={currentPage}

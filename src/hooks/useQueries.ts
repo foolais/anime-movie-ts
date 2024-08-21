@@ -31,12 +31,12 @@ const useQueries = <TData>({
   });
 
   const fetchData = useCallback(async (url: string) => {
+    if (!url) return;
     setState((prev) => ({ ...prev, isLoading: true, isError: false }));
 
     try {
-      if (!url) {
-        throw new Error("URL cannot be empty or undefined");
-      } else if (url.includes("undefined")) {
+      if (url.includes("undefined")) {
+        setState((prev) => ({ ...prev, isLoading: false, isError: true }));
         throw new Error("URL includes undefined");
       }
 

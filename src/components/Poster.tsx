@@ -1,7 +1,8 @@
-import { truncateText } from "../utils/utils";
+import { addBookmarkAnime, truncateText } from "../utils/utils";
 import Button from "./Button";
 import { Bookmark, Info } from "lucide-react";
 import { Movies } from "../types/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface PosterProps {
   data: Movies;
@@ -9,6 +10,24 @@ interface PosterProps {
 
 const Poster = ({ data }: PosterProps) => {
   const { mal_id, title, episodes, synopsis, images } = data;
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+
+  const handleClickBookmark = useCallback(() => {
+    addBookmarkAnime(data, isBookmarked ? "remove" : "add");
+    setIsBookmarked((prev) => !prev);
+  }, [data, isBookmarked]);
+
+  useEffect(() => {
+    const bookmarked = JSON.parse(
+      localStorage.getItem("bookmarkMovie") || "[]",
+    );
+    setIsBookmarked(bookmarked.some((item: Movies) => item.mal_id === mal_id));
+  }, []);
+
+  const synopsisText = useMemo(
+    () => truncateText(synopsis || "", 80),
+    [synopsis],
+  );
 
   return (
     <div className="w-[200px] cursor-pointer transition-all duration-300 ease-in-out">
@@ -29,15 +48,17 @@ const Poster = ({ data }: PosterProps) => {
                 {episodes} Episodes
               </p>
             )}
-            {synopsis && (
-              <p className="text-sm">{truncateText(synopsis, 80)}</p>
-            )}
+            {synopsis && <p className="text-sm">{synopsisText}</p>}
             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform items-center gap-2">
               <Button variant="ghost" className="p-2">
                 <Info size={30} />
               </Button>
-              <Button variant="ghost" className="p-2">
-                <Bookmark size={30} />
+              <Button
+                variant="ghost"
+                className="p-2"
+                onClick={handleClickBookmark}
+              >
+                <Bookmark size={30} fill={isBookmarked ? "#7ECA9C" : "none"} />
               </Button>
             </div>
           </div>
